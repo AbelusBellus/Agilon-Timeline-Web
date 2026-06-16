@@ -126,7 +126,7 @@ function render() {
         const hasEvent = eventYears.has(y);
         const col = isZero ? '#7a5a3a' : (hasEvent ? '#ab8b76' : '#2a221a');
         const wd = isZero ? 2 : (hasEvent ? 1.5 : 0.6);
-        html += `<line x1="${x}" y1="16" x2="${x}" y2="${h - 16}" stroke="${col}" stroke-width="${wd}" opacity="${isZero ? 0.8 : (hasEvent ? 0.9 : 0.35)}" />`;
+        html += `<line x1="${x}" y1="16" x2="${x}" y2="${h - 16}" stroke="${col}" stroke-width="${wd}" opacity="${isZero ? 0.8 : (hasEvent ? 0.45 : 0.35)}" />`;
         
         // подпись года
         if (!isZero) {
