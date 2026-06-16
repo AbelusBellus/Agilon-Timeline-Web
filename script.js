@@ -12,22 +12,22 @@ const CAL = {
 // 2. СОБЫТИЯ (демо)
 // ============================================================
 const EVENTS = [
-    { year:-20, title:'Первые общины в Зукрии', region:'Зукрия', color:'#6b5a4a', desc:'...' },
-    { year:-10, title:'Миграция на восток', region:'Зукрия', color:'#6b5a4a', desc:'...' },
-    { year:0,   title:'Битва за Агилон', region:'Рэздрум', color:'#8b6b53', desc:'...' },
-    { year:13,  title:'Основание Рэздрума', region:'Рэздрум', color:'#8b6b53', desc:'...' },
-    { year:25,  title:'Эшфордский Пакт', region:'Кулидия', color:'#5a6b6b', desc:'...' },
-    { year:40,  title:'Экспедиция Шеффилда', region:'Кулидия', color:'#5a6b6b', desc:'...' },
-    { year:51,  title:'Образование Борэйского союза', region:'Бореанния', color:'#5a4a3a', desc:'...' },
-    { year:54,  title:'Открытие магии', region:'Рэздрум', color:'#8b6b53', desc:'...' },
-    { year:78,  title:'Коронация Августа', region:'Бореанния', color:'#5a4a3a', desc:'...' },
-    { year:99,  title:'Смерть Августа', region:'Бореанния', color:'#5a4a3a', desc:'...' },
-    { year:108, title:'Война 81 дня', region:'Бореанния', color:'#5a4a3a', desc:'...' },
-    { year:109, title:'Ночь лишений', region:'Рэздрум', color:'#8b6b53', desc:'...' },
-    { year:116, title:'Основание БРРФ', region:'Бореанния', color:'#5a4a3a', desc:'...' },
-    { year:126, title:'Бореаннское Содружество', region:'Бореанния', color:'#5a4a3a', desc:'...' },
-    { year:133, title:'Вторжение Кулидии', region:'Кулидия', color:'#5a6b6b', desc:'...' },
-    { year:135, title:'Уничтожение Пендрагона', region:'Бореанния', color:'#5a4a3a', desc:'...' },
+    { year:-20, title:'Первые общины в Зукрии', region:'Зукрия', color:'#6b5a4a', desc:'Зарождение первых людских общин на континенте Зукрия.' },
+    { year:-10, title:'Миграция на восток', region:'Зукрия', color:'#6b5a4a', desc:'Начало расселения зукрийцев по другим регионам.' },
+    { year:0,   title:'Битва за Агилон', region:'Рэздрум', color:'#8b6b53', desc:'Решающее сражение против Пустотного Альянса. Гибель Кэжэди Первого.' },
+    { year:13,  title:'Основание Рэздрума', region:'Рэздрум', color:'#8b6b53', desc:'Зир Эручиболд и его соратники основывают королевство Рэздрум.' },
+    { year:25,  title:'Эшфордский Пакт', region:'Кулидия', color:'#5a6b6b', desc:'Подписание Эшфордского Пакта, образование Кулидийского Союза.' },
+    { year:40,  title:'Экспедиция Шеффилда', region:'Кулидия', color:'#5a6b6b', desc:'Гилберт Шеффилд отправляется в Тирию, начало колонизации.' },
+    { year:51,  title:'Образование Борэйского союза', region:'Бореанния', color:'#5a4a3a', desc:'Бывшие кулидийские колонии объединяются в Борэйский союз.' },
+    { year:54,  title:'Открытие магии', region:'Рэздрум', color:'#8b6b53', desc:'Рэкгим Рэздрум открывает магию, начало Магического расцвета.' },
+    { year:78,  title:'Коронация Августа', region:'Бореанния', color:'#5a4a3a', desc:'Август фон Дорн провозглашается императором Бореаннии.' },
+    { year:99,  title:'Смерть Августа', region:'Бореанния', color:'#5a4a3a', desc:'Смерть Августа фон Дорна, распад Бореаннской империи.' },
+    { year:108, title:'Война 81 дня', region:'Бореанния', color:'#5a4a3a', desc:'Война между Бореаннией и Теократией Рэздрума.' },
+    { year:109, title:'Ночь лишений', region:'Рэздрум', color:'#8b6b53', desc:'Великий Зукрэпомэлский пожар. Переломный момент в истории Рэздрума.' },
+    { year:116, title:'Основание БРРФ', region:'Бореанния', color:'#5a4a3a', desc:'Образование Бореаннского Рабоче-Революционного Фронта.' },
+    { year:126, title:'Бореаннское Содружество', region:'Бореанния', color:'#5a4a3a', desc:'Провозглашение Бореаннского Содружества.' },
+    { year:133, title:'Вторжение Кулидии', region:'Кулидия', color:'#5a6b6b', desc:'Нападение Кулидийской Федерации на Тирию.' },
+    { year:135, title:'Уничтожение Пендрагона', region:'Бореанния', color:'#5a4a3a', desc:'Лич Наберагафор уничтожает Пендрагон.' },
 ];
 
 // ============================================================
@@ -69,6 +69,7 @@ function getRange() {
     return { start: Math.round(currentYear - half), end: Math.round(currentYear + half) };
 }
 function eventsAtYear(y) { return EVENTS.filter(e => e.year === y); }
+function eventsInRange(s, e) { return EVENTS.filter(e => e.year >= s && e.year <= e); }
 
 // ============================================================
 // 5. ОТРИСОВКА
@@ -83,7 +84,6 @@ function render() {
     // ---- инфо ----
     dom.eraName.textContent = cal.era;
     const calYear = convertYear(currentYear);
-    // Если текущий год = 0, показываем символ, иначе подпись
     let yearLabelText;
     if (calYear === 0) {
         yearLabelText = '⚔️ Битва за Агилон';
@@ -96,7 +96,6 @@ function render() {
     dom.yearSlider.value = currentYear;
     dom.footerYear.textContent = calYear === 0 ? '⚔️' : calYear;
     dom.calOffset.textContent = cal.offset;
-    // Диапазон: если начало или конец равны 0, заменяем на символ
     let rangeStart = convertYear(start);
     let rangeEnd = convertYear(end);
     let rangeStr = '';
@@ -111,32 +110,41 @@ function render() {
     const w = 1000, h = 160, margin = 60, pw = w - margin * 2, px = pw / total;
     let html = '';
 
-    // --- сетка годов (без нулевого года) ---
+    // --- сетка годов ---
     let yearStep = 1;
     if (total > 50) yearStep = 5;
     if (total > 200) yearStep = 10;
     if (total > 500) yearStep = 50;
 
+    // Собираем годы с событиями в текущем диапазоне
+    const eventYears = new Set();
+    EVENTS.forEach(e => { if (e.year >= start && e.year <= end) eventYears.add(e.year); });
+
     for (let y = Math.floor(start / yearStep) * yearStep; y <= end; y += yearStep) {
         const x = margin + (y - start) * px;
         const isZero = y === 0;
-        const col = isZero ? '#7a5a3a' : '#2a221a';
-        const wd = isZero ? 2 : 0.6;
-        html += `<line x1="${x}" y1="16" x2="${x}" y2="${h - 16}" stroke="${col}" stroke-width="${wd}" opacity="${isZero ? 0.8 : 0.35}" />`;
-        // подпись: если год = 0, не выводим текст
+        const hasEvent = eventYears.has(y);
+        const col = isZero ? '#7a5a3a' : (hasEvent ? '#ab8b76' : '#2a221a');
+        const wd = isZero ? 2 : (hasEvent ? 1.5 : 0.6);
+        html += `<line x1="${x}" y1="16" x2="${x}" y2="${h - 16}" stroke="${col}" stroke-width="${wd}" opacity="${isZero ? 0.8 : (hasEvent ? 0.9 : 0.35)}" />`;
+        
+        // подпись года
         if (!isZero) {
             const labelYear = convertYear(y);
             let label;
             if (labelYear > 0) label = `${labelYear}`;
             else label = `${Math.abs(labelYear)}`;
-            html += `<text x="${x}" y="${h/2 + 28}" text-anchor="middle" fill="#5f4f3f" font-size="9" opacity="0.8">${label}</text>`;
+            html += `<text x="${x}" y="${h/2 + 28}" text-anchor="middle" fill="${hasEvent ? '#ab8b76' : '#5f4f3f'}" font-size="${hasEvent ? '10' : '9'}" font-weight="${hasEvent ? 'bold' : 'normal'}" opacity="${hasEvent ? '1' : '0.8'}">${label}</text>`;
+            // если есть событие, рисуем кружок над осью
+            if (hasEvent) {
+                html += `<circle cx="${x}" cy="${h/2 - 14}" r="4" fill="${EVENTS.find(e => e.year === y).color || '#8b6b53'}" stroke="#fff" stroke-width="1" />`;
+            }
         } else {
-            // для нулевого года рисуем небольшой маркер (звезда)
             html += `<text x="${x}" y="${h/2 - 10}" text-anchor="middle" fill="#ab8b76" font-size="12" opacity="0.9">★</text>`;
         }
     }
 
-    // --- МАРКЕР ТЕКУЩЕГО ГОДА (всегда виден) ---
+    // --- МАРКЕР ТЕКУЩЕГО ГОДА ---
     const cx = margin + (currentYear - start) * px;
     if (cx >= margin && cx <= w - margin) {
         html += `<line x1="${cx}" y1="16" x2="${cx}" y2="${h - 16}" stroke="#ab8b76" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.6" />`;
@@ -144,7 +152,7 @@ function render() {
         html += `<circle cx="${cx}" cy="${h/2}" r="3" fill="#fff" opacity="0.5" />`;
     }
 
-    // --- деления месяцев (при масштабе <= 200) ---
+    // --- деления месяцев ---
     if (zoom <= 200) {
         const months = cal.months;
         for (let y = Math.floor(start); y <= end; y++) {
@@ -159,7 +167,7 @@ function render() {
     // ось
     html += `<line x1="${margin}" y1="${h/2}" x2="${w - margin}" y2="${h/2}" stroke="#3d2c20" stroke-width="1.5" />`;
 
-    // отметка 0 (звезда) на оси
+    // отметка 0 (звезда)
     const zx = margin + (0 - start) * px;
     if (zx > margin + 2 && zx < w - margin - 2) {
         html += `<circle cx="${zx}" cy="${h/2}" r="5" fill="#8b6b53" stroke="#4d3728" stroke-width="1.5" />`;
@@ -169,7 +177,7 @@ function render() {
     // название календаря
     html += `<text x="${margin + 6}" y="18" fill="#6b5a4a" font-size="10" font-weight="300" letter-spacing="1" opacity="0.7">${cal.name}</text>`;
 
-    // эпохи (полосы внизу)
+    // эпохи
     const eras = [
         { s: -1000, e: -1, color: '#1a1512' },
         { s: 0, e: 50, color: '#2a1f17' },
@@ -189,19 +197,29 @@ function render() {
 
     dom.svg.innerHTML = html;
 
-    // ---- события (малый формат) ----
+    // ---- МАЛЫЙ ФОРМАТ: все события текущего года (компактно) ----
     const evs = eventsAtYear(currentYear);
     dom.eventsStrip.innerHTML = '';
     if (evs.length === 0) {
         dom.eventsStrip.innerHTML = '<span class="placeholder">нет событий в этом году</span>';
     } else {
-        evs.forEach(e => {
+        // Показываем все события через запятую, каждое кликабельно
+        evs.forEach((e, idx) => {
             const tag = document.createElement('span');
             tag.className = 'event-tag';
             tag.style.borderLeftColor = e.color || '#6b5a4a';
             tag.innerHTML = `<span class="ev-year">${e.year}</span> ${e.title}`;
-            tag.addEventListener('click', () => openEventCard(e));
+            tag.addEventListener('click', (ev) => {
+                ev.stopPropagation();
+                openEventCard(e);
+            });
             dom.eventsStrip.appendChild(tag);
+            if (idx < evs.length - 1) {
+                const sep = document.createElement('span');
+                sep.style.color = '#4f3f2f';
+                sep.textContent = ', ';
+                dom.eventsStrip.appendChild(sep);
+            }
         });
     }
 
@@ -223,26 +241,10 @@ function render() {
 }
 
 // ============================================================
-// 6. МОДАЛЬНЫЕ ОКНА (без изменений)
+// 6. МОДАЛЬНЫЕ ОКНА
 // ============================================================
-function openEventCard(event) {
-    const cal = CAL[calId];
-    const calYear = convertYear(event.year);
-    dom.modalContent.innerHTML = `
-        <div class="card">
-            <div class="thumb">[обложка]</div>
-            <div class="title">${event.title}</div>
-            <div class="meta">
-                <span>📅 ${event.year} г. п.Б.з.А.</span>
-                <span>📍 ${event.region || 'неизвестен'}</span>
-                <span>🗓️ ${cal.name}: ${calYear}</span>
-            </div>
-            <div class="desc">${event.desc || 'Описание отсутствует.'}</div>
-        </div>
-    `;
-    dom.modal.classList.add('active');
-}
 
+// СРЕДНИЙ ФОРМАТ — все события года (клик на год на шкале)
 function openYearPanel(year) {
     const evs = eventsAtYear(year);
     if (evs.length === 0) return;
@@ -251,8 +253,8 @@ function openYearPanel(year) {
     evs.forEach(e => {
         const calYear = convertYear(e.year);
         html += `
-            <div class="card" style="cursor:pointer;" onclick="openEventCard(EVENTS.find(ev => ev.title === '${e.title}'))">
-                <div class="thumb" style="height:60px;">[обложка]</div>
+            <div class="card" style="cursor:pointer;" onclick="openEventCard(EVENTS.find(ev => ev.title === '${e.title}'));">
+                <div class="thumb">[обложка]</div>
                 <div class="title">${e.title}</div>
                 <div class="meta">
                     <span>📅 ${e.year} г. п.Б.з.А.</span>
@@ -267,11 +269,30 @@ function openYearPanel(year) {
     dom.modal.classList.add('active');
 }
 
+// БОЛЬШОЙ ФОРМАТ — одно конкретное событие (клик на название события)
+function openEventCard(event) {
+    const cal = CAL[calId];
+    const calYear = convertYear(event.year);
+    dom.modalContent.innerHTML = `
+        <div class="card">
+            <div class="thumb thumb-big">[обложка]</div>
+            <div class="title">${event.title}</div>
+            <div class="meta">
+                <span>📅 ${event.year} г. п.Б.з.А.</span>
+                <span>📍 ${event.region || 'неизвестен'}</span>
+                <span>🗓️ ${cal.name}: ${calYear}</span>
+            </div>
+            <div class="desc">${event.desc || 'Описание отсутствует.'}</div>
+        </div>
+    `;
+    dom.modal.classList.add('active');
+}
+
 dom.modalClose.addEventListener('click', () => dom.modal.classList.remove('active'));
 dom.modal.addEventListener('click', (e) => { if (e.target === dom.modal) dom.modal.classList.remove('active'); });
 
 // ============================================================
-// 7. КЛИК ПО ГОДУ НА ШКАЛЕ
+// 7. КЛИК ПО ГОДУ НА ШКАЛЕ → СРЕДНИЙ ФОРМАТ
 // ============================================================
 dom.svg.addEventListener('click', (e) => {
     const rect = dom.svg.getBoundingClientRect();
