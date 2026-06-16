@@ -47,7 +47,7 @@ const dom = {
 // 4. ФУНКЦИЯ ЗАГРУЗКИ
 // ============================================================
 function loadEvents() {
-    return fetch('events.json')
+    fetch(`events.json?t=${Date.now()}`)
         .then(response => {
             if (!response.ok) throw new Error('Не удалось загрузить events.json');
             return response.json();
