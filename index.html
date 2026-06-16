@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Агилон · Хронос</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ШАПКА -->
+    <div class="header">
+        <h1>⏳ Агилон <span>·</span> Хронос</h1>
+        <div class="sub">временная шкала · <span id="eraName">Курдозская эра</span></div>
+    </div>
+
+    <!-- УПРАВЛЕНИЕ -->
+    <div class="controls">
+        <label>
+            Календарь
+            <select id="calSelect">
+                <option value="kurdoz" selected>Курдозский (16 мес.)</option>
+                <option value="blomsiv">Бломсивский (12 мес.)</option>
+                <option value="rudichin">Рудичинский (6 мес.)</option>
+                <option value="abner">Абнерский (12 мес.)</option>
+            </select>
+        </label>
+        <label>
+            Масштаб
+            <select id="zoomSelect">
+                <option value="100">100 лет</option>
+                <option value="200" selected>200 лет</option>
+                <option value="400">400 лет</option>
+                <option value="800">800 лет</option>
+            </select>
+        </label>
+        <div class="info" id="calInfo">
+            <strong id="calOffset">0</strong> лет от Битвы за Агилон &middot; <span id="rangeDisplay">-100 … 100</span>
+        </div>
+    </div>
+
+    <!-- ПРОКРУТКА -->
+    <div class="scroll-panel">
+        <div class="slider-wrap">
+            <input type="range" id="yearSlider" min="-200" max="200" value="0" step="1" />
+            <span class="year-label" id="yearLabel">0 г.</span>
+        </div>
+        <div class="play-group">
+            <button id="playBtn">▶</button>
+            <label>
+                скорость
+                <input type="range" id="speedSlider" min="1" max="20" value="5" />
+                <span class="speed-val" id="speedVal">5</span>
+            </label>
+        </div>
+    </div>
+
+    <!-- СОБЫТИЯ (малый формат) -->
+    <div class="events-strip" id="eventsStrip">
+        <span class="placeholder">события появятся при прокрутке</span>
+    </div>
+
+    <!-- ШКАЛА -->
+    <div class="timeline-wrap" id="timelineWrap">
+        <svg id="timelineSvg" viewBox="0 0 1000 160" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+
+    <!-- ЭПОХИ -->
+    <div class="era-row" id="eraRow">
+        <span class="on">до Битвы за Агилон</span>
+        <span>Тёмная эпоха</span>
+        <span>Магический расцвет</span>
+        <span>Эпоха войн</span>
+        <span>Новейшая эра</span>
+    </div>
+
+    <div class="footer">⏳ перетащите шкалу · <span id="footerYear">0</span></div>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО -->
+<div class="modal" id="modal">
+    <div class="modal-box">
+        <span class="close" id="modalClose">&times;</span>
+        <div id="modalContent">
+            <p style="color:#6b5a4a;">Нажмите на событие или год, чтобы увидеть детали</p>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
